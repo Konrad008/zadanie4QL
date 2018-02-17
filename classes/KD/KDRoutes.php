@@ -1,17 +1,23 @@
 <?php
 namespace KD;
 
-class KDRoutes
-{
-    private $person;
-    private $skill;
+use QLabs\Interfaces\Routes;
 
-    public function __construct()
-    {
-        $this->person = new \QLabs\People();
-        $this->skill = new \QLabs\Skills();
+class KDRoutes implements Routes
+{
+    private $database;
+    private $people;
+    private $skills;
+
+    public function __construct() {
+        include __DIR__.'/../../includes/DatabaseConnection.php';
+        $this->skills = new \QLabs\Controllers\Skills();
+        $this->people = new \QLabs\Controllers\People();
     }
-    //$database = new \QLabs\Database();
+
+    public function getRoutes(): array {
+
+    }
 
 
 }

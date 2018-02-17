@@ -10,4 +10,8 @@ class EntryPoint
         $this->route = $route;
         $this->routes = $routes;
     }
+
+    public function run() {
+
+    }
 }

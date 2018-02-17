@@ -7,6 +7,7 @@ try {
     }
 
     $entryPoint = new \KD\EntryPoint($argv[1], new \KD\KDRoutes());
+    $entryPoint->run();
 
     print $argc . PHP_EOL;
     print $argv[0] . PHP_EOL;

@@ -1,6 +1,6 @@
 <?php
 
-namespace QLabs;
+namespace QLabs\Controllers;
 
 class Skills
 {
