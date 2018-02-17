@@ -1,30 +1,59 @@
 <?php
 namespace KD;
 
-use Database\DatabaseConnection;
 use QLabs\Interfaces\Routes;
+use QLabs\Database\DatabaseConnection;
+use QLabs\Controllers\Skills;
+use QLabs\Controllers\People;
+
 
 class KDRoutes implements Routes
 {
     private $database;
-    private $people;
-    private $skills;
 
     public function __construct() {
-        $this->database = new \QLabs\Database\DatabaseConnection([
+        $this->database = new DatabaseConnection('databasesrc/', [
             'peopleDB.json',
-            'skillsDB.json'
+            'skillsDB.json',
         ]);
 
-        print_r($this->database->readFromDB());
-
-        $this->skills = new \QLabs\Controllers\Skills();
-        $this->people = new \QLabs\Controllers\People();
     }
 
     public function getRoutes(): array {
+        $peopleController = new People();
+        $skillsController = new Skills();
 
+        $routes = [
+            'list' => [
+                'controller' => $peopleController,
+                'action' => 'showList',
+            ],
+            'find' => [
+                'controller' => $peopleController,
+                'action' => 'findPerson',
+            ],
+            'languages' => [
+                'controller' => $skillsController,
+                'action' => 'showLanguages',
+            ],
+            'addPerson' => [
+                'controller' => $peopleController,
+                'action' => 'addCoder',
+            ],
+            'removePerson' => [
+                'controller' => $peopleController,
+                'action' => 'removeCoder',
+            ],
+            'addLanguage' => [
+                'controller' => $skillsController,
+                'action' => 'addCodingLanguage',
+            ],
+            'removeLanguage' => [
+                'controller' => $skillsController,
+                'action' => 'removeCodingLanguage',
+            ],
+        ];
+
+        return $routes;
     }
-
-
 }

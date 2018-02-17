@@ -7,9 +7,9 @@ class DatabaseConnection implements DB
 {
     private $files;
 
-    public function __construct($files) {
+    public function __construct(string $location, array $files) {
         foreach ($files as $file) {
-            $this->files[] = __DIR__ . '/../../../database/' .$file;
+            $this->files[] = __DIR__ . '/../../../' . $location .$file;
         }
     }
 
@@ -48,27 +48,10 @@ class DatabaseConnection implements DB
         }
 
         return $resources;
-
     }
 
     public function saveToDB(array $json){
 
     }
-
-
-
-//$people = fopen("peopleDB.json","w+");
-//$skills = fopen("skillsDB.json", "w+");
-//
-//if (flock($people,LOCK_EX) && flock($skills, LOCK_EX)) {
-//
-//
-//flock($people,LOCK_UN);
-//}
-//else {
-//    throw new Exception('Error locking database files! Please try again later.');
-//}
-//
-//fclose($file);
 
 }
