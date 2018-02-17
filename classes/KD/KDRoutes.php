@@ -1,27 +1,26 @@
 <?php
 namespace KD;
 
-use QLabs\Interfaces\Routes;
+use QLabs\Interfaces\RT;
 use QLabs\Database\DatabaseConnection;
 use QLabs\Controllers\Skills;
 use QLabs\Controllers\People;
 
 
-class KDRoutes implements Routes
+class KDRoutes implements RT
 {
     private $database;
+    private $args;
 
-    public function __construct() {
-        $this->database = new DatabaseConnection('databasesrc/', [
-            'peopleDB.json',
-            'skillsDB.json',
-        ]);
+    public function __construct(array $arguments, string $databasePath, array $loadFiles) {
+        $this->args = $arguments;
+        $this->database = new DatabaseConnection($databasePath, $loadFiles);
 
     }
 
     public function getRoutes(): array {
-        $peopleController = new People();
-        $skillsController = new Skills();
+        $peopleController = new People($this->args, $this->database);
+        $skillsController = new Skills($this->args, $this->database);
 
         $routes = [
             'list' => [
@@ -46,11 +45,11 @@ class KDRoutes implements Routes
             ],
             'addLanguage' => [
                 'controller' => $skillsController,
-                'action' => 'addCodingLanguage',
+                'action' => 'addCodeLanguage',
             ],
             'removeLanguage' => [
                 'controller' => $skillsController,
-                'action' => 'removeCodingLanguage',
+                'action' => 'removeCodeLanguage',
             ],
         ];
 

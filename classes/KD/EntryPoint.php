@@ -1,7 +1,9 @@
 <?php
 namespace KD;
 
-class EntryPoint
+use QLabs\Interfaces\EP;
+
+class EntryPoint implements EP
 {
     private $route;
     private $routes;

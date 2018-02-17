@@ -1,6 +1,6 @@
 <?php
 namespace QLabs\Interfaces;
 
-interface Routes {
+interface RT {
     public function getRoutes(): array;
 }
