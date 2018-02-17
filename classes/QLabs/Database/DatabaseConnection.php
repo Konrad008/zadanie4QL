@@ -32,7 +32,11 @@ class DatabaseConnection implements DB
 
     }
 
-    public function search(string $string = ' ') {
+    public function searchByLanguage(array $langs): array {
+        return [];
+    }
+
+    public function search(string $string = ' '): array {
         $database = $this->readFromDB();
 
         $return = [];
@@ -80,7 +84,7 @@ class DatabaseConnection implements DB
                     }
 
                 } else {
-                    throw new Exception('Error locking database files! Please try again later.');
+                    throw new \Exception('Error locking database files! Please try again later.');
                 }
 
                 fwrite($thisfile, $filecont);

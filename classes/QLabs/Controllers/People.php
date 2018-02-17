@@ -25,6 +25,7 @@ class People
 
     public function findPerson() {
         if (isset($this->args[2])) {
+
             $list = $this->db->search($this->args[2]);
 
             foreach ($list as $value) {
