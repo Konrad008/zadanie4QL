@@ -2,44 +2,35 @@
 
 $files = [];
 
-$peoplesrc = __DIR__.'/../peopleDB.json';
-$skillssrc = __DIR__.'/../skillsDB.json';
+$files[] = __DIR__.'/../peopleDB.json';
+$files[] = __DIR__.'/../skillsDB.json';
 
-if (file_exists($peoplesrc) && file_exists($peoplesrc)) {
+foreach ($files as $file) {
 
-    $peoplefile = fopen($peoplesrc, 'r');
-    $skillsfile = fopen($skillssrc, 'r');
+    if (file_exists($file)) {
 
-    $ps = filesize($peoplesrc);
-    $ss = filesize($skillssrc);
+        $thisfile = fopen($file, 'r');
+        $size = filesize($file);
 
-    if (flock($peoplefile, LOCK_EX) && flock($skillsfile, LOCK_EX)) {
+        if (flock($thisfile, LOCK_EX)) {
 
-        if ($ps != 0) {
-            $peoplecont = fread(fopen($peoplesrc, 'r'), $ps);
+            if ($size != 0) {
+                $filecont = fread(fopen($file, 'r'), $size);
+            } else {
+                $filecont = '';
+            }
+
         } else {
-            $peoplecont = '';
+            throw new Exception('Error locking database files! Please try again later.');
         }
 
-        if ($ss != 0) {
-            $skillscont = fread(fopen($skillssrc, 'r'), $ss);
-        } else {
-            $skillscont = '';
-        }
+        fwrite($thisfile, $filecont);
+        flock($thisfile, LOCK_UN);
+        fclose($thisfile);
 
+    } else {
+        fopen($file, 'w+');
     }
-
-    fwrite($peoplefile, $peoplecont);
-    fwrite($skillsfile, $skillscont);
-
-    flock($peoplefile, LOCK_UN);
-    flock($skillsfile, LOCK_UN);
-
-    fclose($peoplefile);
-    fclose($skillsfile);
-
-} else {
-    throw new Exception('Error locking database files! Please try again later.');
 }
 
 //$skillsDB = json_decode($skillscont, true);
