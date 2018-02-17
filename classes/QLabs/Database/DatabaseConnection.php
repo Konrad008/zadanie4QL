@@ -7,13 +7,62 @@ class DatabaseConnection implements DB
 {
     private $files;
 
-    public function __construct(string $location, array $files) {
+    public function __construct(string $location) {
+
+        $files = [
+            'peopleDB.json',
+            'skillsDB.json',
+        ];
+
         foreach ($files as $file) {
-            $this->files[] = __DIR__ . '/../../../' . $location .$file;
+            $this->files[] = __DIR__ . '/../../../' . $location . $file;
         }
+
     }
 
-    public function readFromDB(): array{
+    public function save() {
+
+    }
+
+    public function update() {
+
+    }
+
+    public function delete() {
+
+    }
+
+    public function search(string $string = ' ') {
+        $database = $this->readFromDB();
+
+        $return = [];
+
+        foreach ($database[0] as $keyp => $person) {
+            if (strpos(strtolower($person['name'].' '.$person['surname']), strtolower($string)) !== false) {
+                $personret = '';
+
+                $personret .= $keyp . ". " . $person['name'] . ' ' . $person['surname'] . ' -';
+
+                $langsarr = ' (';
+
+                foreach ($person['langs'] as $keyl => $lang) {
+                    if (array_key_exists($lang, $database[1])) {
+                        $langsarr .= $database[1][$database[0][$keyp]['langs'][$keyl]] . ', ';
+                    }
+                }
+
+                $langsarr = substr($langsarr, 0, strlen($langsarr) - 2) . ')';
+
+                $personret .= $langsarr;
+
+                $return[] = ltrim($personret);
+            }
+        }
+
+        return $return;
+    }
+
+    private function readFromDB(): array{
 
         foreach ($this->files as $file) {
 
@@ -50,7 +99,7 @@ class DatabaseConnection implements DB
         return $resources;
     }
 
-    public function saveToDB(array $json){
+    private function saveToDB(array $json){
 
     }
 

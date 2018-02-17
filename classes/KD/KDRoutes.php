@@ -12,9 +12,9 @@ class KDRoutes implements RT
     private $database;
     private $args;
 
-    public function __construct(array $arguments, string $databasePath, array $loadFiles) {
+    public function __construct(array $arguments, string $databasePath) {
         $this->args = $arguments;
-        $this->database = new DatabaseConnection($databasePath, $loadFiles);
+        $this->database = new DatabaseConnection($databasePath);
 
     }
 

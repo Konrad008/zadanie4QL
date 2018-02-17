@@ -7,10 +7,7 @@ try {
         throw new Exception('No command found'.PHP_EOL.PHP_EOL.'Avalible commands:'.PHP_EOL.PHP_EOL.'list'.PHP_EOL.'find "..."'.PHP_EOL.'languages'.PHP_EOL.'addPerson'.PHP_EOL.'removePerson'.PHP_EOL.'addLanguage'.PHP_EOL.'removeLanguage'.PHP_EOL.PHP_EOL);
     } else {
 
-        $entryPoint = new \KD\EntryPoint($argv[1], new \KD\KDRoutes($argv, 'databasesrc/', [
-            'peopleDB.json',
-            'skillsDB.json',
-        ]));
+        $entryPoint = new \KD\EntryPoint($argv[1], new \KD\KDRoutes($argv, 'databasesrc/'));
 
         $entryPoint->run();
 
