@@ -9,6 +9,7 @@ try {
     }
 
     $entryPoint = new \KD\EntryPoint($argv[1], new \KD\KDRoutes());
+
     $entryPoint->run();
 
 }

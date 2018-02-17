@@ -1,3 +1,5 @@
 # zadanie4QL
 
-Konrad Albrecht
+Zadanie rekrutacyjne wykonane dla firmy `Quantum Labs` z Gdańska
+
+by one and only Konrad Albrecht vel Konrad
