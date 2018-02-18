@@ -35,21 +35,29 @@ class KDRoutes implements RT
                 'controller' => $skillsController,
                 'action' => 'showLanguages',
             ],
-            'addPerson' => [
+            'addperson' => [
                 'controller' => $peopleController,
                 'action' => 'addCoder',
             ],
-            'removePerson' => [
+            'removeperson' => [
                 'controller' => $peopleController,
                 'action' => 'removeCoder',
             ],
-            'addLanguage' => [
+            'addlanguage' => [
                 'controller' => $skillsController,
                 'action' => 'addCodeLanguage',
             ],
-            'removeLanguage' => [
+            'removelanguage' => [
                 'controller' => $skillsController,
                 'action' => 'removeCodeLanguage',
+            ],
+            'listlangs' => [
+                'controller' => $skillsController,
+                'action' => 'listLanguages',
+            ],
+            'test' => [
+                'controller' => $peopleController,
+                'action' => 'test',
             ],
         ];
 

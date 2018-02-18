@@ -39,7 +39,20 @@ class People
     public function addCoder() {
 
     }
-    public function removeCoder() {
 
+    public function removeCoder() {
+        $dbresponse = $this->db->readFromDB();
+
+        if (array_key_exists($this->args[2], $dbresponse[0]) !== false) {
+            unset($dbresponse[0][$this->args[2]]);
+        } else {
+            throw new \Exception(PHP_EOL.PHP_EOL.'ID not found!'.PHP_EOL.PHP_EOL);
+        }
+
+        $this->db->saveToDB($dbresponse);
+    }
+
+    public function test() {
+        print_r($this->db->saveToDB($this->db->readFromDB()));
     }
 }

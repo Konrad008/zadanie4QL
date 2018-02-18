@@ -16,24 +16,29 @@ class DatabaseConnection implements DB
 
         foreach ($files as $file) {
             $this->files[] = __DIR__ . '/../../../' . $location . $file;
+
         }
 
     }
 
-    public function save() {
-
-    }
-
-    public function update() {
-
-    }
-
-    public function delete() {
-
-    }
-
     public function searchByLanguage(array $langs): array {
-        return [];
+        $database = $this->readFromDB();
+
+        foreach ($langs as $key => $value) {
+            $langs[$key] = array_search(strtolower($value), $database[1]);
+        }
+
+        $return = [];
+
+        foreach ($database[0] as $key => $valuep){
+            $response = array_intersect($valuep['langs'], $langs);
+
+            if (count($response) == count($langs)) {
+                $return = array_merge($return, $this->search($valuep['name'].' '.$valuep['surname']));
+            }
+        }
+
+        return $return;
     }
 
     public function search(string $string = ' '): array {
@@ -66,9 +71,9 @@ class DatabaseConnection implements DB
         return $return;
     }
 
-    private function readFromDB(): array{
+    public function readFromDB(): array{
 
-        foreach ($this->files as $file) {
+        foreach ($this->files as $key => $file) {
 
             if (file_exists($file)) {
 
@@ -103,7 +108,26 @@ class DatabaseConnection implements DB
         return $resources;
     }
 
-    private function saveToDB(array $json){
+    public function saveToDB(array $json){
+
+        $json[0] = array_values($json[0]);
+
+        foreach ($json as $key => $value){
+            $json[$key] = json_encode($value);
+        }
+
+        foreach ($json as $key => $file) {
+            $thisfile = fopen($this->files[$key], 'w+');
+
+            if (flock($thisfile, LOCK_EX)) {
+                fwrite($thisfile, $file);
+            } else {
+                throw new \Exception('Error locking database files! Please try again later.');
+            }
+
+            flock($thisfile, LOCK_UN);
+            fclose($thisfile);
+        }
 
     }
 

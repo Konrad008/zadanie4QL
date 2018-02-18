@@ -9,7 +9,7 @@ class EntryPoint implements EP
     private $routes;
 
     public function __construct(string $route, \KD\KDRoutes $routes) {
-        $this->route = $route;
+        $this->route = strtolower($route);
         $this->routes = $routes;
     }
 
