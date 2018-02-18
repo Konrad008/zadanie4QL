@@ -4,6 +4,7 @@ namespace QLabs\Controllers;
 
 use QLabs\Database\DatabaseConnection;
 
+// Logika ludzi.
 class People
 {
     private $args;
@@ -20,7 +21,6 @@ class People
         foreach ($list as $value) {
             print($value.PHP_EOL);
         }
-
     }
 
     public function findPerson() {
@@ -44,10 +44,18 @@ class People
         if (isset($this->args[4])) {
             foreach ($this->args as $key => $value) {
                 if ($key == 2) {
-                    $newuser['name'] = $value;
+                    if (preg_match('/[^a-zA-Z]+/', $value) == false) {
+                        $newuser['name'] = $value;
+                    } else {
+                        throw new \Exception(PHP_EOL.PHP_EOL.'Name can contain only letters!'.PHP_EOL.PHP_EOL);
+                    }
                 }
                 if ($key == 3) {
-                    $newuser['surname'] = $value;
+                    if (preg_match('/[^a-zA-Z]+/', $value) == false) {
+                        $newuser['surname'] = $value;
+                    } else {
+                        throw new \Exception(PHP_EOL.PHP_EOL.'Surname can contain only letters'.PHP_EOL.PHP_EOL);
+                    }
                 }
                 if ($key >= 4) {
                     if (array_search($this->args[$key], $dbresponse[1]) !== false) {
@@ -79,7 +87,4 @@ class People
         $this->db->saveToDB($dbresponse);
     }
 
-    public function test() {
-        print_r($this->db->saveToDB($this->db->readFromDB()));
-    }
 }

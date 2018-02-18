@@ -3,6 +3,7 @@ namespace QLabs\Database;
 
 use QLabs\Interfaces\DB;
 
+// Logika bazy.
 class DatabaseConnection implements DB
 {
     private $files;
@@ -16,9 +17,7 @@ class DatabaseConnection implements DB
 
         foreach ($files as $file) {
             $this->files[] = __DIR__ . '/../../../' . $location . $file;
-
         }
-
     }
 
     public function searchByLanguage(array $langs): array {
@@ -31,6 +30,7 @@ class DatabaseConnection implements DB
         $return = [];
 
         foreach ($database[0] as $key => $valuep){
+
             $response = array_intersect($valuep['langs'], $langs);
 
             if (count($response) == count($langs)) {
@@ -47,10 +47,12 @@ class DatabaseConnection implements DB
         $return = [];
 
         foreach ($database[0] as $keyp => $person) {
+
             if (strpos(strtolower($person['name'].' '.$person['surname']), strtolower($string)) !== false) {
+
                 $personret = '';
 
-                $personret .= $keyp . ". " . $person['name'] . ' ' . $person['surname'] . ' -';
+                $personret .= $keyp . '. ' . $person['name'] . ' ' . $person['surname'] . ' -';
 
                 $langsarr = ' (';
 
@@ -62,7 +64,9 @@ class DatabaseConnection implements DB
 
                 $langsarr = substr($langsarr, 0, strlen($langsarr) - 2) . ')';
 
-                $personret .= $langsarr;
+                if (strlen($langsarr) !== 1) {
+                    $personret .= $langsarr;
+                }
 
                 $return[] = ltrim($personret);
             }
@@ -85,7 +89,7 @@ class DatabaseConnection implements DB
                     if ($size != 0) {
                         $filecont = fread(fopen($file, 'r'), $size);
                     } else {
-                        $filecont = '';
+                        $filecont = '{}';
                     }
 
                 } else {
@@ -98,7 +102,7 @@ class DatabaseConnection implements DB
 
             } else {
                 fopen($file, 'w+');
-                fclose($file);
+                $filecont = '{}';
             }
 
             $resources[] = json_decode($filecont, true);
@@ -117,6 +121,7 @@ class DatabaseConnection implements DB
         }
 
         foreach ($json as $key => $file) {
+
             $thisfile = fopen($this->files[$key], 'w+');
 
             if (flock($thisfile, LOCK_EX)) {

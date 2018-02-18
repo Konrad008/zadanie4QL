@@ -4,6 +4,7 @@ namespace QLabs\Controllers;
 
 use QLabs\Database\DatabaseConnection;
 
+// Logika umiejętności.
 class Skills
 {
     private $args;
@@ -16,13 +17,14 @@ class Skills
 
     public function showLanguages() {
         if (isset($this->args[2])) {
+
             for ($i = 2; $i < count($this->args); $i++){
                 $langs[] = $this->args[$i];
             }
+
             foreach ($this->db->searchByLanguage($langs) as $value) {
                 print($value . PHP_EOL);
             }
-
 
         } else {
             throw new \Exception(PHP_EOL.PHP_EOL.'Provide at least one language!'.PHP_EOL.PHP_EOL);
@@ -31,6 +33,7 @@ class Skills
 
     public function addCodeLanguage() {
         if (isset($this->args[2])) {
+
             $dbresponse = $this->db->readFromDB();
 
             if (array_search($this->args[2], $dbresponse[1]) !== false) {
@@ -40,6 +43,7 @@ class Skills
             }
 
             $this->db->saveToDB($dbresponse);
+
         } else {
             throw new \Exception(PHP_EOL.PHP_EOL.'Please specify language to add!'.PHP_EOL.PHP_EOL);
         }
@@ -64,6 +68,5 @@ class Skills
             print($value.PHP_EOL);
         }
     }
-
 
 }

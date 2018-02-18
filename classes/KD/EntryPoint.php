@@ -13,6 +13,7 @@ class EntryPoint implements EP
         $this->routes = $routes;
     }
 
+    // Sprawdzamy czy dana komenda istnieje, oraz wykonujemy na podstawie komendy określoną metode z określonego kontrolera.
     public function run() {
         $routes = $this->routes->getRoutes();
 
@@ -26,7 +27,5 @@ class EntryPoint implements EP
         } else {
             throw new \Exception(PHP_EOL.PHP_EOL.'Invalid command, please run application with none to recieve list of avalible actions'.PHP_EOL.PHP_EOL);
         }
-
-
     }
 }

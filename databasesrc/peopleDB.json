@@ -1,1 +1,27 @@
-[{"name":"Pan","surname":"Mariusz","langs":[1,3,4]},{"name":"Marcin","surname":"Wojewoda","langs":[3]},{"name":"\u0141ukasz","surname":"Kraft","langs":[4]},{"name":"Genowefa","surname":"Smali\u0144ska","langs":[1,4]},{"name":"Konrad","surname":"Albrecht","langs":[1,2,3,4]},{"name":"Micha\u0142","surname":"Waszkiewicz","langs":[1,2]}]
+{
+  "0" : {
+    "name": "Pan",
+    "surname": "Mariusz",
+    "langs": [1,3,4]
+  },
+  "1" : {
+    "name": "Marcin",
+    "surname": "Wojewoda",
+    "langs": [3]
+  },
+  "2" : {
+    "name": "Łukasz",
+    "surname": "Kraft",
+    "langs": [4]
+  },
+  "3" : {
+    "name": "Genowefa",
+    "surname": "Smalińska",
+    "langs": [1,4]
+  },
+  "4" : {
+    "name": "Konrad",
+    "surname": "Albrecht",
+    "langs": [1,2,3,4]
+  }
+}
