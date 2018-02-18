@@ -37,7 +37,34 @@ class People
     }
 
     public function addCoder() {
+        $dbresponse = $this->db->readFromDB();
 
+        $newuser = [];
+
+        if (isset($this->args[4])) {
+            foreach ($this->args as $key => $value) {
+                if ($key == 2) {
+                    $newuser['name'] = $value;
+                }
+                if ($key == 3) {
+                    $newuser['surname'] = $value;
+                }
+                if ($key >= 4) {
+                    if (array_search($this->args[$key], $dbresponse[1]) !== false) {
+                        $newuser['langs'][] = array_search($this->args[$key], $dbresponse[1]);
+                    } else {
+                        $dbresponse[1][] = strtolower($this->args[$key]);
+                        $newuser['langs'][] = array_search($this->args[$key], $dbresponse[1]);
+                    }
+                }
+            }
+        } else {
+            throw new \Exception(PHP_EOL.PHP_EOL.'You must provide name, surname and at least one programming language!!'.PHP_EOL.PHP_EOL);
+        }
+
+        $dbresponse[0][] = $newuser;
+
+        $this->db->saveToDB($dbresponse);
     }
 
     public function removeCoder() {
